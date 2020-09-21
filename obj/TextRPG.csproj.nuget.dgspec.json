@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG\\TextRPG.csproj": {}
+    "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG\\TextRPG.csproj": {
+    "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG\\TextRPG.csproj",
+        "projectUniqueName": "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG.csproj",
         "projectName": "TextRPG",
-        "projectPath": "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG\\TextRPG.csproj",
+        "projectPath": "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG.csproj",
         "packagesPath": "C:\\Users\\thatf\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\TextRPG\\obj\\",
+        "outputPath": "C:\\Users\\thatf\\OneDrive\\Documents\\GitHub\\_AIE\\Text RPG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\thatf\\AppData\\Roaming\\NuGet\\NuGet.Config",

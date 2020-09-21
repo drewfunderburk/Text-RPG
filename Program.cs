@@ -6,7 +6,9 @@ namespace TextRPG
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.SetWindowSize(160, 50);
+            Game game = new Game();
+            game.Run();
         }
     }
 }
