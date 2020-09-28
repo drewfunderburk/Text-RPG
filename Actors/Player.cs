@@ -6,33 +6,44 @@ namespace TextRPG.Actors
 {
     class Player : Actor
     {
+        int _armor;
+
         #region CONSTRUCTORS
         public Player()
         {
-            _health = 100;
+            _name = "N/A";
+            _maxHealth = 100;
+            _health = _maxHealth;
+            _damage = 10;
+            _armor = 0;
         }
 
-        public Player(int health)
+        public Player(string name, int maxHealth)
         {
-            _health = health;
+            _name = name;
+            _maxHealth = maxHealth;
+            _health = _maxHealth;
+            _damage = 10;
+            _armor = 0;
         }
         #endregion
 
-        public override void Attack()
+        public override int TakeDamage(int damage)
         {
-            throw new NotImplementedException();
+            // Remove armor from damage and clamp to >0
+            int actualDamage = Math.Max(0, damage - _armor);
+
+            // Reduce health, but never below zero
+            _health -= actualDamage;
+            Math.Clamp(_health, 0, _maxHealth);
+
+            return actualDamage;
         }
 
         public override void PrintStats()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("[" + _name + " " + _health + "/" + _maxHealth + "hp]");
         }
-
-        public override void TakeDamage()
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
 }

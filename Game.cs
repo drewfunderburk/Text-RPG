@@ -16,7 +16,8 @@ namespace TextRPG
     {
         bool _gameOver = false;
         GameState _gameState;
-        Player player;
+        Player _player;
+
         public void Run()
         {
             Start();
@@ -30,7 +31,7 @@ namespace TextRPG
         private void Start()
         {
             _gameState = GameState.MainMenu;
-            player = new Player();
+            _player = new Player();
         }
 
         private void Update()
@@ -43,13 +44,45 @@ namespace TextRPG
                     AsciiArt.DrawMainMenu();
                     Console.WriteLine();
                     PressAnyKeyToContinue();
+                    _gameState = GameState.CharacterCreation;
+                    break;
+                #endregion
+
+                #region CHARACTER CREATION
+                case GameState.CharacterCreation:
+                    Console.Clear();
+
+                    // Get player name
+                    Console.WriteLine("[Character Creation]\n");
+                    Console.WriteLine("What is your name?");
+                    Console.Write("> ");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("\nWelcome, " + name + "!");
+                    
+                    _player = new Player(name, 100);
+
+                    // Confirm finished with character creation
+                    Console.WriteLine("Are you ready to begin?");
+                    Console.WriteLine(" [1] Yes");
+                    Console.WriteLine(" [2] No");
+                    char input = Input.GetSelection(2);
+
+                    if (input == '1')
+                        _gameState = GameState.Game;
                     break;
                 #endregion
 
                 #region GAME
                 case GameState.Game:
+                    Console.Clear();
+
+                    // Start Battle with generic enemy
+                    Enemy enemy = new Enemy();
+                    DoBattle(_player, enemy);
+
                     break;
                 #endregion
+
                 default:
                     _gameState = GameState.MainMenu;
                     break;
@@ -59,6 +92,45 @@ namespace TextRPG
         private void End()
         {
 
+        }
+
+        private void DoBattle(Actor player, Actor enemy)
+        {
+            while (player.isAlive() && enemy.isAlive())
+            {
+                Console.Clear();
+                Console.WriteLine("It's a fight!\n");
+                player.PrintStats();
+                enemy.PrintStats();
+                Console.WriteLine();
+                Console.WriteLine(" [1] Attack");
+                char input = Input.GetSelection(1);
+
+                // Player turn
+                if (input == '1')
+                    _player.Attack(enemy);
+
+                // Enemy turn
+                if (enemy.isAlive())
+                    enemy.Attack(player);
+                else
+                    Console.WriteLine(enemy._name + " is dead!");
+                PressAnyKeyToContinue();
+            }
+
+            // Check if player is alive
+            if (_player.isAlive())
+            {
+                Console.Clear();
+                Console.WriteLine("\nYou win!");
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("\nYou died!");
+                _gameState = GameState.MainMenu;
+            }
+            PressAnyKeyToContinue();
         }
 
         private void PressAnyKeyToContinue()
