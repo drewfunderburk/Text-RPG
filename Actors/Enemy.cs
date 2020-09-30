@@ -6,6 +6,7 @@ namespace TextRPG
 {
     class Enemy : Actor
     {
+
         public Enemy()
         {
             _name = "Enemy";

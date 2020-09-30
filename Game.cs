@@ -94,7 +94,12 @@ namespace TextRPG
 
         }
 
-        private void DoBattle(Actor player, Actor enemy)
+        private void DoShop()
+        {
+
+        }
+
+        private void DoBattle(Player player, Actor enemy)
         {
             while (player.isAlive() && enemy.isAlive())
             {
@@ -104,11 +109,21 @@ namespace TextRPG
                 enemy.PrintStats();
                 Console.WriteLine();
                 Console.WriteLine(" [1] Attack");
-                char input = Input.GetSelection(1);
+                Console.WriteLine(" [2] Use Item");
+                char input = Input.GetSelection(2);
 
                 // Player turn
                 if (input == '1')
-                    _player.Attack(enemy);
+                    player.Attack(enemy);
+                else if (input == '2')
+                {
+                    Console.WriteLine();
+                    player._inventory.PrintContents();
+                    Console.WriteLine();
+                    Console.WriteLine("Select an Item to use");
+                    int itemIndex = Convert.ToInt32(Input.GetSelection(player._inventory.GetContents().Length).ToString());
+                    player.UseItem(itemIndex);
+                }
 
                 // Enemy turn
                 if (enemy.isAlive())
