@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TextRPG.Actors;
 
@@ -17,7 +18,9 @@ namespace TextRPG
         bool _gameOver = false;
         GameState _gameState;
         Player _player;
-
+        Enemy[] _enemies;
+        int _turn = 0;
+        string _savePath = "save.txt";
         public void Run()
         {
             Start();
@@ -32,6 +35,15 @@ namespace TextRPG
         {
             _gameState = GameState.MainMenu;
             _player = new Player();
+            _enemies = new Enemy[5];
+            for (int i = 0; i < _enemies.Length; i++)
+            {
+                string name = "Enemy " + (i + 1);
+                int maxHealth = (int) Math.Round(100 + (i * 20f));
+                int damage = (int) Math.Round(7 + (i * 2f));
+
+                _enemies[i] = new Enemy(name, maxHealth, damage);
+            }
         }
 
         private void Update()
@@ -43,8 +55,27 @@ namespace TextRPG
                     Console.Clear();
                     AsciiArt.DrawMainMenu();
                     Console.WriteLine();
-                    PressAnyKeyToContinue();
-                    _gameState = GameState.CharacterCreation;
+                    Console.WriteLine(" [1] Continue");
+                    Console.WriteLine(" [2] New Game");
+                    Console.WriteLine(" [3] Quit");
+                    char mainMenuInput = Input.GetSelection(3);
+                    switch (mainMenuInput)
+                    {
+                        case '1':
+                            if (File.Exists(_savePath))
+                            {
+                                Load();
+                                _gameState = GameState.Game;
+                            }
+                            break;
+                        case '2':
+                            _gameState = GameState.CharacterCreation;
+                            _turn = 0;
+                            break;
+                        case '3':
+                            _gameOver = true;
+                            return;
+                    }
                     break;
                 #endregion
 
@@ -69,6 +100,7 @@ namespace TextRPG
 
                     if (input == '1')
                         _gameState = GameState.Game;
+                    Save(_player);
                     break;
                 #endregion
 
@@ -76,10 +108,21 @@ namespace TextRPG
                 case GameState.Game:
                     Console.Clear();
 
-                    // Start Battle with generic enemy
-                    Enemy enemy = new Enemy();
-                    DoBattle(_player, enemy);
+                    // Send player to shop
+                    DoShop(_player);
 
+                    // Start Battle with generic enemy
+                    DoBattle(_player, _enemies[_turn]);
+
+                    _turn++;
+                    
+                    if (_turn >= _enemies.Length)
+                    {
+                        Console.WriteLine("\n\nYou win!");
+                        _gameOver = true;
+                    }
+
+                    Save(_player);
                     break;
                 #endregion
 
@@ -94,9 +137,51 @@ namespace TextRPG
 
         }
 
-        private void DoShop()
+        private void Save(Player player)
+        {
+            // Get player variables
+            string[] playerRawVariables = player.GetRawVariables();
+
+            // Write player variables to file
+            StreamWriter writer = new StreamWriter(_savePath);
+            for (int i = 0; i < playerRawVariables.Length; i++)
+            {
+                if (playerRawVariables[i] != null)
+                    writer.WriteLine(playerRawVariables[i]);
+            }
+
+            // Save which turn we're on
+            writer.WriteLine(_turn);
+
+            writer.Close();
+        }
+
+        private void Load()
         {
 
+        }
+
+        private void DoShop(Player player)
+        {
+            Shop shop = new Shop();
+            while (true)
+            {
+                Console.Clear();
+                player.PrintStats();
+                player._inventory.PrintContents();
+                Console.WriteLine();
+                Console.WriteLine("Welcome to the Shop!");
+                Console.WriteLine("Please select an item to purchase. Enter 'q' to leave shop");
+                shop._inventory.PrintContents();
+                char input = Input.GetSelection(shop._inventory.GetContents().Length, true);
+                if (input == 'q')
+                    break;
+                int itemIndex = (int) Char.GetNumericValue(input) - 1;
+                shop.SellItem(itemIndex, player);
+                Console.WriteLine();
+                player._inventory.PrintContents();
+                PressAnyKeyToContinue();
+            }
         }
 
         private void DoBattle(Player player, Actor enemy)
@@ -121,7 +206,7 @@ namespace TextRPG
                     player._inventory.PrintContents();
                     Console.WriteLine();
                     Console.WriteLine("Select an Item to use");
-                    int itemIndex = Convert.ToInt32(Input.GetSelection(player._inventory.GetContents().Length).ToString());
+                    int itemIndex = (int)Char.GetNumericValue(Input.GetSelection(player._inventory.GetContents().Length)) - 1;
                     player.UseItem(itemIndex);
                 }
 
@@ -138,6 +223,14 @@ namespace TextRPG
             {
                 Console.Clear();
                 Console.WriteLine("\nYou win!");
+
+                // Random gold loot;
+                Random rand = new Random();
+                int baseGoldLoot = 20;
+                int deviation = 10;
+                int goldLoot = rand.Next(baseGoldLoot - deviation, baseGoldLoot + deviation);
+                player.AddGold(goldLoot);
+                Console.WriteLine("You've found " + goldLoot + "gp on the corpse!");
             }
             else
             {
@@ -152,6 +245,7 @@ namespace TextRPG
         {
             Console.Write("Press any key to continue...");
             Console.ReadKey();
+            Console.WriteLine();
         }
     }
 }

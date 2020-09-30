@@ -22,17 +22,22 @@ namespace TextRPG
             return '0';
         }
 
-        public static char GetSelection(int options)
+        public static char GetSelection(int options, bool allowQuit = false)
         {
             while (true)
             {
                 Console.Write("> ");
                 char input = Console.ReadKey().KeyChar;
-                if (int.Parse(input.ToString()) <= options)
+                if (allowQuit && input == 'q')
+                {
+                    return input;
+                }
+                if (Char.GetNumericValue(input) <= options)
                 {
                     Console.WriteLine();
                     return input;
                 }
+               
                 Console.WriteLine("\nInvalid Input");
             }
         }

@@ -1,0 +1,16 @@
+Drew
+100
+6
+10
+5
+24
+Damage Potion
+20
+10
+Your damage has increased by 10
+None
+Armor Potion
+40
+5
+Your armor has increased by 5
+1
