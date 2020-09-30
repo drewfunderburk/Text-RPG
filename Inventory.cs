@@ -4,15 +4,19 @@ using System.Text;
 
 namespace TextRPG
 {
+    // Used to manage the inventory of anything that needs to store items
     class Inventory
     {
+        // Array of Items to story the goods
         private Item[] _inventory;
         
+        // Default constructor to initialize a new Inventory
         public Inventory(int inventorySize)
         {
             _inventory = new Item[inventorySize];
         }
 
+        // Print the contents of this inventory to the console
         public void PrintContents()
         {
             for (int i = 0; i < _inventory.Length; i++)
@@ -25,17 +29,20 @@ namespace TextRPG
             }
         }
         
+        // Set a specific item
         public void SetItemAtIndex(int index, Item item)
         {
             _inventory[index] = item;
         }
 
+        // Returns the inventory array
         public Item[] GetContents()
         {
             return _inventory;
         }
 
-        public void ConsumeItem(int index)
+        // Remove's an item from the inventory
+        public void RemoveItem(int index)
         {
             _inventory[index] = null;
         }

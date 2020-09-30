@@ -4,8 +4,10 @@ using System.Text;
 
 namespace TextRPG
 {
+    // Used to store the large walls of ASCII for prettying up the game
     public static class AsciiArt
     {
+        // Main menu
         public static void DrawMainMenu()
         {
             string text = @"
