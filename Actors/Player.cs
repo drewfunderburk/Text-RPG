@@ -84,58 +84,33 @@ namespace TextRPG.Actors
 
             return output;
         }
-        public void SavePlayer(string path)
+
+        public void SetRawVariables(string[] variables)
         {
-            StreamWriter writer = new StreamWriter(path);
-            writer.WriteLine(_name);
-            writer.WriteLine(_maxHealth);
-            writer.WriteLine(_health);
-            writer.WriteLine(_damage);
-            writer.WriteLine(_armor);
-            writer.WriteLine(_gold);
-
-            // Save inventory
-            Item[] items = _inventory.GetContents();
-            for (int i = 0; i < items.Length; i++)
-            {
-                if (items[i] != null)
-                {
-                    string[] stats = items[i].GetRawStats();
-                    for (int n = 0; n < stats.Length; n++)
-                    {
-                        writer.WriteLine(stats[n]);
-                    }
-                }
-                else
-                    writer.WriteLine("None");
-            }
-
-            writer.Close();
-        }
-
-        public void LoadPlayer(string path)
-        {
-            StreamReader reader = new StreamReader(path);
-            _name = reader.ReadLine();
-            _maxHealth = int.Parse(reader.ReadLine());
-            _health = int.Parse(reader.ReadLine());
-            _damage = int.Parse(reader.ReadLine());
-            _armor = int.Parse(reader.ReadLine());
-            _gold = int.Parse(reader.ReadLine());
+            _name = variables[0];
+            _maxHealth = int.Parse(variables[1]);
+            _health = int.Parse(variables[2]);
+            _damage = int.Parse(variables[3]);
+            _armor = int.Parse(variables[4]);
+            _gold = int.Parse(variables[5]);
 
             // Read inventory
+            int counter = 6;
             for (int i = 0; i < _inventory.GetContents().Length; i++)
             {
-                string nextLine = reader.ReadLine();
+                string nextLine = variables[counter];
+                counter++;
                 if (nextLine != "None")
                 {
-                    int goldValue = int.Parse(reader.ReadLine());
-                    int buff = int.Parse(reader.ReadLine());
-                    string buffMessage = reader.ReadLine();
+                    int goldValue = int.Parse(variables[counter]);
+                    counter++;
+                    int buff = int.Parse(variables[counter]);
+                    counter++;
+                    string buffMessage = variables[counter];
+                    counter++;
                     _inventory.SetItemAtIndex(i, new Item(nextLine, buff, buffMessage, goldValue));
                 }
             }
-            reader.Close();
         }
 
         public void AddGold(int ammount)

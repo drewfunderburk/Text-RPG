@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using TextRPG.Actors;
 
@@ -40,7 +41,7 @@ namespace TextRPG
             {
                 string name = "Enemy " + (i + 1);
                 int maxHealth = (int) Math.Round(100 + (i * 20f));
-                int damage = (int) Math.Round(7 + (i * 2f));
+                int damage = (int) Math.Round(8 + (i * 2f));
 
                 _enemies[i] = new Enemy(name, maxHealth, damage);
             }
@@ -134,7 +135,8 @@ namespace TextRPG
 
         private void End()
         {
-
+            Console.WriteLine("Thank you for playing!");
+            PressAnyKeyToContinue();
         }
 
         private void Save(Player player)
@@ -158,7 +160,21 @@ namespace TextRPG
 
         private void Load()
         {
+            if (!File.Exists(_savePath))
+                throw new FileNotFoundException();
 
+            string[] rawInput = new string[File.ReadAllLines(_savePath).Count()];
+            StreamReader reader = new StreamReader(_savePath);
+            int counter = 0;
+            while (!reader.EndOfStream)
+            {
+                rawInput[counter] = reader.ReadLine();
+                counter++;
+            }
+
+            _player.SetRawVariables(rawInput);
+            _turn = int.Parse(rawInput[rawInput.Length - 1]);
+            reader.Close();
         }
 
         private void DoShop(Player player)
