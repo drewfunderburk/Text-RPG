@@ -163,7 +163,8 @@ namespace TextRPG
                     }
 
                     // Save after every round
-                    Save(_player);
+                    if (_player.isAlive())
+                        Save(_player);
                     break;
                 #endregion
 
