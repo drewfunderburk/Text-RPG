@@ -149,6 +149,8 @@ namespace TextRPG
                     DoShop(_player);
 
                     // Start Battle with an enemy based on the round
+                    if (_round >= _enemies.Length)
+                        _round = 0;
                     DoBattle(_player, _enemies[_round]);
 
                     // Increment the round
