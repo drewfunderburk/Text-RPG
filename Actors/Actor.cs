@@ -37,7 +37,7 @@ namespace TextRPG
         public virtual int TakeDamage(int damage)
         {
             _health -= damage;
-            Math.Clamp(_health, 0, _maxHealth);
+            _health = Math.Clamp(_health, 0, _maxHealth);
             return damage;
         }
 

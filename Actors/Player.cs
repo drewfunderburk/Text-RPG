@@ -48,7 +48,7 @@ namespace TextRPG.Actors
 
             // Reduce health and clamp
             _health -= actualDamage;
-            Math.Clamp(_health, 0, _maxHealth);
+            _health = Math.Clamp(_health, 0, _maxHealth);
 
             return actualDamage;
         }
