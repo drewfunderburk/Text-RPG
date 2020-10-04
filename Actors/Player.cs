@@ -127,10 +127,10 @@ namespace TextRPG.Actors
             }
         }
 
-        // Give the player an ammount of gold
-        public void AddGold(int ammount)
+        // Give the player an amount of gold
+        public void AddGold(int amount)
         {
-            _gold += ammount;
+            _gold += amount;
         }
 
         // Attempts to purchase an item

@@ -7,7 +7,7 @@ namespace TextRPG
     // Used to manage the inventory of anything that needs to store items
     class Inventory
     {
-        // Array of Items to story the goods
+        // Array of Items to store the goods
         private Item[] _inventory;
         
         // Default constructor to initialize a new Inventory

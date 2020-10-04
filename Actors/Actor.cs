@@ -25,13 +25,13 @@ namespace TextRPG
             Console.WriteLine(enemy._name + " takes " + damage + "dmg from " + _name);
         }
 
-        // Print's the actor's stats
+        // Prints the actor's stats
         public virtual void PrintStats()
         {
             Console.WriteLine("[" + _name + " " + _health + "/" + _maxHealth + "hp]");
         }
 
-        // Reduces the actor's health by a given ammount, not allowing it to fall below zero.
+        // Reduces the actor's health by a given amount, not allowing it to fall below zero.
         // Returns the damage dealt for the purpose of calculating damage reduction if necessary in
         //  a derived class
         public virtual int TakeDamage(int damage)
@@ -42,7 +42,7 @@ namespace TextRPG
         }
 
         // Returns whether the actor is considered alive
-        public virtual bool isAlive()
+        public virtual bool IsAlive()
         {
             return _health > 0;
         }

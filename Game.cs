@@ -163,7 +163,7 @@ namespace TextRPG
                     }
 
                     // Save after every round
-                    if (_player.isAlive())
+                    if (_player.IsAlive())
                         Save(_player);
                     break;
                 #endregion
@@ -248,7 +248,7 @@ namespace TextRPG
         // Start a battle between the player and a given actor
         private void DoBattle(Player player, Actor enemy)
         {
-            while (player.isAlive() && enemy.isAlive())
+            while (player.IsAlive() && enemy.IsAlive())
             {
                 Console.Clear();
                 Console.WriteLine("It's a fight!\n");
@@ -277,7 +277,7 @@ namespace TextRPG
                 }
 
                 // Enemy turn
-                if (enemy.isAlive())
+                if (enemy.IsAlive())
                     enemy.Attack(player);
                 else
                     Console.WriteLine(enemy._name + " is dead!");
@@ -285,7 +285,7 @@ namespace TextRPG
             }
 
             // Check if player is alive
-            if (_player.isAlive())
+            if (_player.IsAlive())
             {
                 Console.Clear();
                 Console.WriteLine("\nYou win!");
