@@ -17,6 +17,10 @@ namespace TextRPG
                 Console.Write("> ");
                 char input = Console.ReadKey().KeyChar;
 
+                // Run the loop again if the player presses enter
+                if (input == '\r')
+                    continue;
+
                 // Check if input was quit
                 if (allowQuit && input == 'q')
                 {
