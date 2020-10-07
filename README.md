@@ -3,6 +3,11 @@ This is about as generic as it gets, folks! This is a text based console game me
 
 It is played simply by entering numbers based on an on-screen prompt.
 
+### How to get The Game
+- Download the latest release
+- Unzip the file into its own folder
+- Run TextRPG.exe
+
 ### Main Menu
 Here you will be given three options:
 * Continue

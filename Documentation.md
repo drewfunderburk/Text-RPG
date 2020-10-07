@@ -48,31 +48,6 @@ private void DoShop | Player player | Opens an instance of the shop and allows t
 private void DoBattle | Player player, Actor enemy | Begins a battle between the player and an Actor opponent
 private void PressAnyKeyToContinue | N/A | Helper function to streamline waiting
 
-#### Run()
-- Runs Start()
-- Runs Update() in a loop while _gameOver is false
-- Runs End() when the Update() loop ends
-
-#### Start()
-- Initializes _gameState to GameState.MainMenu
-- Initializes _player to a new instance of the Player class
-- Initializes _enemies to an array of type Enemy with a length of 5
-- Loops over _enemies and initializes each index to a new instance of Enemy with scaling stats
-
-#### Update()
-- Switches functionality based on the value of _gameState
-  - If _gameState is MainMenu, gives the option to
-    - Continue a previous save
-    - Start a new game
-    - Quit
-  - If _gameState is CharacterCreation, prompts the player for their name and confirms they are ready to begin the game
-  - If _gameState is Game
-    - Calls DoShop() to send the player to the shop
-    - Calls DoBattle() to initiate a battle between the player and this round's enemy
-    - Saves the game if the player survived the battle
-
-#### End()
-- Shows a thank you message and prompts for a keypress before closing the program
 _________________________
 
 ### static class AsciiArt
