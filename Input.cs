@@ -22,12 +22,14 @@ namespace TextRPG
                     continue;
 
                 // Check if input was quit
+                int inputNumber = (int) Char.GetNumericValue(input);
                 if (allowQuit && input == 'q')
                 {
                     return input;
                 }
+
                 // Check if input was a number within the allowed options
-                else if (Char.GetNumericValue(input) <= options)
+                else if (inputNumber >= 0 && inputNumber <= options)
                 {
                     Console.WriteLine();
                     return input;
